@@ -1,5 +1,5 @@
 # minesweeper-project
 ..X
-.O.
+.OX
 O.X
 
