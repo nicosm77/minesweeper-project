@@ -38,8 +38,11 @@ def quit():
 def view_leaderboard():
     mainmenu.destroy()
     viewlb = Tk()
-    viewlb.geometry("100x100")
-    Label(viewlb, text=leaderboard.get_leaderboard(10)) #need to figure out how to display dataframes
+    viewlb.geometry("350x300")
+    lb = Label(viewlb, text=leaderboard.get_leaderboard(20).to_string(header=["Board size","Time (seconds)", "Name"],index=False, justify="left"))
+    lb.configure(font=("Courier",10))
+    lb.pack() 
+    Button(viewlb, text = "Back", command = viewlb.destroy).pack(side=BOTTOM, pady=10)
     viewlb.mainloop()
 
 while(running):
