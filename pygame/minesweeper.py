@@ -1,26 +1,28 @@
 import pygame
+from tkinter import *
 from tkinter import messagebox
 from board import *
+from leaderboard import *
 import time
 import os
 
 class minesweeper():
     
     # initializer
-    def __init__(self, board, screensize):
+    def __init__(self, board, screensize, leaderboard):
         self.board = board
         self.screensize = screensize
+        self.leaderboard = leaderboard
         
         difficulty = board.difficulty
         
         if (difficulty == "very easy"):
             self.tilesize = screensize[0]//5 , screensize[1]//5
-        if (difficulty == "easy"):
-            self.tilesize = screensize[0]//10 , screensize[1]//10
-            
-        if (difficulty == "medium"):
+        elif (difficulty == "easy"):
+            self.tilesize = screensize[0]//10 , screensize[1]//10  
+        elif (difficulty == "medium"):
             self.tilesize = screensize[0]//15 , screensize[1]//15
-        if (difficulty == "hard"):
+        elif (difficulty == "hard"):
             self.tilesize = screensize[0]//20 , screensize[1]//20
             
         self.loadimages()
@@ -52,13 +54,19 @@ class minesweeper():
                         
             pygame.display.flip()
             
-            if (self.board.getwon()): # win situation
-                endtime = time.time()
-                messagebox.showinfo(message=f"You Won! Time taken: {round(endtime-starttime,1)} seconds")
+            if (self.board.getwon()): #if the game has ended
+                self.finaltime = round(time.time() - starttime,1)
+                self.endscreen = Tk()
+                self.endscreen.geometry("225x100")
+                Label(self.endscreen, text=f"You won! Time taken: {self.finaltime} seconds\n\nEnter your username for the leaderboard:").pack(side=TOP)
+                entry = Entry(self.endscreen, width=30)
+                entry.pack(side=TOP)
+                Button(self.endscreen, text = "Submit", command = lambda: self.submit(entry.get())).pack(side=TOP)
+                self.endscreen.mainloop()
                 running = False
-            
+
             if (self.board.getlost()):
-                endtime = time.time()
+                self.finaltime = round(time.time() - starttime,1)
                 for row in range(self.board.size[0]):
                     for col in range(self.board.size[1]):
                         tile = self.board.get_tile((row, col))
@@ -66,7 +74,7 @@ class minesweeper():
                             tile.click()
                 self.createboard()
                 pygame.display.flip()
-                messagebox.showinfo(message=f"Oops! You lost! Time taken: {round(endtime-starttime,1)} seconds")
+                messagebox.showinfo(message=f"Oops! You lost! Time taken: {self.finaltime} seconds")
                 running = False
             
         pygame.quit() # quits pygame
@@ -134,3 +142,7 @@ class minesweeper():
         
         tile = self.board.get_tile(index) # gets the tile user clicked
         self.board.userclicked(tile, rightclick) # passes to board
+
+    def submit(self, name): #submit score to the leaderboard database
+        self.leaderboard.add_score(self.board.size[0], self.finaltime, name)
+        self.endscreen.destroy()
