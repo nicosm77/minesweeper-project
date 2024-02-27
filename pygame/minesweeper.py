@@ -14,7 +14,7 @@ class minesweeper():
         difficulty = board.difficulty
         
         # based off a 600 x 600 screen easy has 10 tiles, medium 15, hard 20
-        if (difficulty == "test"):
+        if (difficulty == "very easy"):
             self.tilesize = 120, 120
         if (difficulty == "easy"):
             self.tilesize = 60, 60

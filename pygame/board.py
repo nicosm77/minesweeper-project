@@ -6,7 +6,7 @@ class board():
         
         self.difficulty = difficulty
         
-        if difficulty == "test": # 5 x 5 with 0.1 probability of bomb
+        if difficulty == "very easy": # 5 x 5 with 0.1 probability of bomb
             self.size = (5,5)
             self.prob = 0.1
 
