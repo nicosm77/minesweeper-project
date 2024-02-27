@@ -54,28 +54,30 @@ class minesweeper():
                         
             pygame.display.flip()
             
-            if (self.board.getwon()): #if the game has ended
-                self.finaltime = round(time.time() - starttime,1)
-                self.endscreen = Tk()
+            if (self.board.getwon()):
+                self.finaltime = round(time.time() - starttime,1) # get final time
+
+                self.endscreen = Tk() #make window to submit name to leaderboard
                 self.endscreen.geometry("225x100")
                 Label(self.endscreen, text=f"You won! Time taken: {self.finaltime} seconds\n\nEnter your username for the leaderboard:").pack(side=TOP)
                 entry = Entry(self.endscreen, width=30)
                 entry.pack(side=TOP)
-                Button(self.endscreen, text = "Submit", command = lambda: self.submit(entry.get())).pack(side=TOP)
+                Button(self.endscreen, text = "Submit", command = lambda: self.submit(entry.get())).pack(side=TOP) #submit name when this button is clicked
+
                 self.endscreen.mainloop()
-                running = False
+                running = False # end game
 
             if (self.board.getlost()):
-                self.finaltime = round(time.time() - starttime,1)
-                for row in range(self.board.size[0]):
+                self.finaltime = round(time.time() - starttime,1) # get final time
+                for row in range(self.board.size[0]): #reveal all unclicked tiles
                     for col in range(self.board.size[1]):
                         tile = self.board.get_tile((row, col))
                         if not tile.getclicked():
                             tile.click()
                 self.createboard()
-                pygame.display.flip()
+                pygame.display.flip() #update display
                 messagebox.showinfo(message=f"Oops! You lost! Time taken: {self.finaltime} seconds")
-                running = False
+                running = False #end game
             
         pygame.quit() # quits pygame
 
