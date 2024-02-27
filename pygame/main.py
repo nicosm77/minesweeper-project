@@ -2,6 +2,7 @@ from minesweeper import *
 from board import *
 from tkinter import *
 
+#make start menu
 menu = Tk()
 menu.geometry("225x100")
 Label(menu, text="Select a difficulty!").grid(row=0,columnspan=4)
