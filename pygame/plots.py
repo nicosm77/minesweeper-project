@@ -61,7 +61,7 @@ def visualize_avg_completion_time_per_person(leaderboard_df):
 
 def main():
     # Fetch leaderboard data
-    conn = sqlite3.connect("leaderboard_db.sqlite")
+    conn = sqlite3.connect("pygame/leaderboard_db.sqlite")
     query = "SELECT * FROM leaderboard"
     leaderboard_df = pd.read_sql_query(query, conn)
 
