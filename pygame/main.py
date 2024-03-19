@@ -38,10 +38,10 @@ def quit():
 
 def view_leaderboard():
     mainmenu.destroy()
-    viewlb = Tk()
+    viewlb = Tk() #Create new window
     viewlb.geometry("350x300")
-    lb = Label(viewlb, text=leaderboard.get_leaderboard(20).to_string(header=["Board size","Time (seconds)", "Name"],index=False, justify="left"))
-    lb.configure(font=("Courier",10))
+    lb = Label(viewlb, text=leaderboard.get_leaderboard(20).to_string(header=["Board size","Time (seconds)", "Name"],index=False, justify="left")) #convert dataframe to text and display it
+    lb.configure(font=("Courier",10)) #monospace so that the columns line up
     lb.pack() 
     Button(viewlb, text="Back", command=viewlb.destroy).pack(side=BOTTOM, pady=10)
     viewlb.mainloop()
@@ -52,8 +52,8 @@ def view_plots():
 
 while running:
     mainmenu = Tk()  # Initialize main menu
-    mainmenu.geometry("250x75")
-    Label(mainmenu, text="Welcome! Click a button to begin.").grid(row=0,columnspan=3,pady=5)
+    mainmenu.geometry("330x75")
+    Label(mainmenu, text="Welcome! Click a button to begin.").grid(row=0,columnspan=4,pady=5)
     Button(mainmenu, text="New Game", command=playgame).grid(row=1,column=0,padx=7)
     Button(mainmenu, text="View Leaderboard", command=view_leaderboard).grid(row=1,column=1,padx=7)
     Button(mainmenu, text="View Plots", command=view_plots).grid(row=1,column=2,padx=7)  # Add a button to view plots
