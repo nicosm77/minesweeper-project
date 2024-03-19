@@ -19,10 +19,10 @@ class Leaderboard():
             cursor.execute(cmd)
             db.commit()
 
-    def get_leaderboard(self, n):
+    def get_leaderboard(self):
             cmd = \
             f"""
-            SELECT * FROM leaderboard ORDER BY boardsize, time LIMIT {n};
+            SELECT * FROM leaderboard ORDER BY boardsize, time;
             """
             with self.leaderboard_db as conn:
                 leaderboard = pd.read_sql_query(cmd, conn)

@@ -1,6 +1,7 @@
 from minesweeper import *
 from board import *
 from tkinter import *
+from tkinter import ttk
 from leaderboard import Leaderboard
 import plots  # Importing the plots module
 
@@ -36,14 +37,33 @@ def quit():
     running = False
     mainmenu.destroy()
 
+
 def view_leaderboard():
     mainmenu.destroy()
-    viewlb = Tk() #Create new window
-    viewlb.geometry("350x300")
-    lb = Label(viewlb, text=leaderboard.get_leaderboard(20).to_string(header=["Board size","Time (seconds)", "Name"],index=False, justify="left")) #convert dataframe to text and display it
-    lb.configure(font=("Courier",10)) #monospace so that the columns line up
-    lb.pack() 
+    viewlb = Tk() 
+    viewlb.geometry("325x325")
+
+    frame = Frame(viewlb)
+    frame.pack(fill=BOTH, expand=True)
+
+    canvas = Canvas(frame)
+    scrollbar = ttk.Scrollbar(frame, orient=VERTICAL, command=canvas.yview)
+
+    scrollbar.pack(side=LEFT, fill=Y)
+    canvas.pack(side=LEFT, fill=BOTH, expand=True)
+
+    canvas.configure(yscrollcommand=scrollbar.set)
+    canvas.bind('<Configure>', lambda _: canvas.configure(scrollregion=canvas.bbox("all")))
+
+    inner_frame = Frame(canvas)
+    canvas.create_window((0, 0), window=inner_frame, anchor="nw")
+
+    lb = Label(inner_frame, text=leaderboard.get_leaderboard().to_string(header=["Board size","Time (seconds)", "Name"],index=False, justify="left"))
+    lb.configure(font=("Courier",10))
+    lb.pack()
+
     Button(viewlb, text="Back", command=viewlb.destroy).pack(side=BOTTOM, pady=10)
+
     viewlb.mainloop()
 
 def view_plots():
