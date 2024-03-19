@@ -54,6 +54,7 @@ class minesweeper():
                         
             pygame.display.flip()
             
+            #endgame conditions
             if (self.board.getwon()):
                 self.finaltime = round(time.time() - starttime,1) # get final time
 

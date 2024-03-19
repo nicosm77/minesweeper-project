@@ -41,3 +41,16 @@ class tile_class():
         
     def getneighbors(self):
         return self.neighbors # list of neighbors
+    
+    def chord(self):
+        flagsaround = 0 #find out how many flagged neighbors
+        for neighbor in self.neighbors: 
+            if neighbor.getflagged():
+                flagsaround += 1
+        if flagsaround == self.numaround: # if the number of flagged neighbors = clue number...
+            numclicked = 0
+            for neighbor in self.neighbors: # click on all unflagged and unclicked neighbors
+                if not (neighbor.getflagged() or neighbor.getclicked()):
+                    neighbor.click()
+                    numclicked += 1
+        return numclicked # return number clicked

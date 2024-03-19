@@ -80,7 +80,10 @@ class board():
     def userclicked(self, tile, rightclick):
         
         if (rightclick): 
-            tile.toggleflag()
+            if tile.getclicked(): # chording feature (see tile.py for info)
+                self.numberclicked += tile.chord()
+            else:
+                tile.toggleflag()
             return
         
         if (tile.getflagged()):
