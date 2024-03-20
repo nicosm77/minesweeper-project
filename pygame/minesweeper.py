@@ -79,7 +79,7 @@ class minesweeper():
                 pygame.display.flip() #update display
                 messagebox.showinfo(message=f"Oops! You lost! Time taken: {self.finaltime} seconds")
                 running = False #end game
-            
+
         pygame.quit() # quits pygame
 
 
