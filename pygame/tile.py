@@ -47,8 +47,8 @@ class tile_class():
         for neighbor in self.neighbors: 
             if neighbor.getflagged():
                 flagsaround += 1
+        numclicked = 0
         if flagsaround == self.numaround: # if the number of flagged neighbors = clue number...
-            numclicked = 0
             for neighbor in self.neighbors: # click on all unflagged and unclicked neighbors
                 if not (neighbor.getflagged() or neighbor.getclicked()):
                     neighbor.click()
